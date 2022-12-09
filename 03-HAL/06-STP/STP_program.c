@@ -20,8 +20,9 @@ void HSTP_voidSendSynchronous(u8 Copy_u8Data){
     s8 Local_s8Counter=0;
     u8 Local_u8Bit=0;
     for(Local_s8Counter=0;Local_s8Counter>=0;Local_s8Counter--){
-        Local_u8Bit=GET_BIT(Copy_u8Data,Local_s8Counter);
         
+        Local_u8Bit=GET_BIT(Copy_u8Data,Local_s8Counter);
+
         MGPIO_u8SetPinValue(STP_SD_PIN,Local_u8Bit);
 
         MGPIO_u8SetPinValue(STP_SHC_PIN,GPIO_PIN_HIGH);
