@@ -12,6 +12,6 @@
 #define STP_SD_PIN          GPIO_PORTA,GPIO_PIN0
 #define STP_STC_PIN         GPIO_PORTA,GPIO_PIN1
 #define STP_SHC_PIN         GPIO_PORTA,GPIO_PIN2
-
+#define STP_MR_PIN          GPIO_PORTA,GPIO_PIN3
 
 #endif
