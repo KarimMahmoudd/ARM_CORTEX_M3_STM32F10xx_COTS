@@ -66,7 +66,7 @@ void MSTK_voidSetIntervalSingle(u32 Copy_u32Ticks, void (*Copy_pvNotifFunc)(void
 
 void MSTK_voidSetBusyWait(u32 Copy_u32Ticks)
 {
-    u32 Local_u32PreviousDelay= MSTK_u32GetRemainingTime;
+    u32 Local_u32PreviousDelay= MSTK_u32GetRemainingTime();
     STK_LOAD = Copy_u32Ticks;
 
     if(GET_BIT(STK_CTRL,STK_CTRL_TICK_INT)==1){
