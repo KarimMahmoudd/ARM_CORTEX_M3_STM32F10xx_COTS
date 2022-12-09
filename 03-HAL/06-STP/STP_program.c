@@ -10,17 +10,27 @@
 #include "BIT_MATH.h"
 
 #include "GPIO_interface.h"
+#include "STK_interface.h"
 
 #include "STP_interface.h"
 #include "STP_private.h"
 #include "STP_config.h"
 
 void HSTP_voidSendSynchronous(u8 Copy_u8Data){
-    MGPIO_u8SetPinValue(STP_STC_PIN,GPIO_PIN_LOW);
-    for(u8 Local_u8Iterator=0;Local_u8Iterator<8;Local_u8Iterator++){
-        MGPIO_u8SetPinValue(STP_SHC_PIN,GPIO_PIN_LOW);
-        MGPIO_u8SetPinValue(STP_SD_PIN,GET_BIT(Copy_u8Data,(7-Local_u8Iterator)));
+    s8 Local_s8Counter=0;
+    u8 Local_u8Bit=0;
+    for(Local_s8Counter=0;Local_s8Counter>=0;Local_s8Counter--){
+        Local_u8Bit=GET_BIT(Copy_u8Data,Local_s8Counter);
+        
+        MGPIO_u8SetPinValue(STP_SD_PIN,Local_u8Bit);
+
         MGPIO_u8SetPinValue(STP_SHC_PIN,GPIO_PIN_HIGH);
+        MSTK_voidSetBusyWait(1);
+        MGPIO_u8SetPinValue(STP_SHC_PIN,GPIO_PIN_LOW);
+        MSTK_voidSetBusyWait(1);
     }
     MGPIO_u8SetPinValue(STP_STC_PIN,GPIO_PIN_HIGH);
+    MSTK_voidSetBusyWait(1);
+    MGPIO_u8SetPinValue(STP_STC_PIN,GPIO_PIN_LOW);
+    MSTK_voidSetBusyWait(1);
 }
