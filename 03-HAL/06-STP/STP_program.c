@@ -15,7 +15,7 @@
 #include "STP_private.h"
 #include "STP_config.h"
 
-void HSTP_voidTransferData(u8 Copy_u8Data){
+void HSTP_voidSendSynchronous(u8 Copy_u8Data){
     MGPIO_u8SetPinValue(STP_STC_PIN,GPIO_PIN_LOW);
     for(u8 Local_u8Iterator=0;Local_u8Iterator<8;Local_u8Iterator++){
         MGPIO_u8SetPinValue(STP_SHC_PIN,GPIO_PIN_LOW);
