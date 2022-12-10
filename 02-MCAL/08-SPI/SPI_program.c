@@ -98,5 +98,4 @@ void MSPI1_voidAsynchTranscieve(u16 Copy_u16DataToSend, void (*Copy_pvNotifFunc)
 void SPI1_IRQHandler(void){
     u16 Data = SPI1->DR;
     SPI1_pvNotifFunc(Data);
-    CLR_BIT(SPI1->CR2,SPI_CR2_RXNEIE);
 }
