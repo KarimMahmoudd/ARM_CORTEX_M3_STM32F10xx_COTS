@@ -9,6 +9,7 @@
 #ifndef STP_INTERFACE_H
 #define STP_INTERFACE_H
 
-void HSTP_voidSendSynchronous(u8 Copy_u8Data);
+void HSTP_voidReset(void);
+void HSTP_voidSendSynchronous(u32 Copy_u32Data,u8 Copy_u8DataLength);
 
 #endif
