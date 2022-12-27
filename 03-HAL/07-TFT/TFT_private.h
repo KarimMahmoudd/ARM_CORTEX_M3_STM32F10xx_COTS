@@ -1,6 +1,31 @@
-#include <stdio.h>
+/*************************************************************************************************************************************/
+/*  Author      : Karim Mahmoud                                                                                                      */
+/*  Date        : 25 DEC 2022                                                                                                        */
+/*  Layer       : HAL                                                                                                                */
+/*  SWC         : TFT                                                                                                                */
+/*  Version     : V01                                                                                                                */
+/*************************************************************************************************************************************/
 
-static const unsigned char charset[128][8] = {
+#ifndef TFT_PRIVATE_H
+#define TFT_PRIVATE_H
+
+#define CMD_SLPOUT          0x11
+#define CMD_COLMOD          0x3A
+#define CMD_DISPON          0x29
+#define CMD_CASET           0x2A
+#define CMD_RASET           0x2B
+#define CMD_RAMWR           0x2C
+
+#define RGB444          0x03
+#define RGB565          0x05
+#define RGB666          0x06
+
+static void voidSendCommand(u8 Copy_u8Command);
+static void voidSendData(u8 Copy_u8Data);
+static void voidFillPixel(u16 Copy_u16Color);
+static void voidSetBoundaries(u16 Copy_u16StartColumn, u16 Copy_u16EndColumn, u16 Copy_u16StartRow, u16 Copy_u16EndRow);
+
+static const u8 ASCII[128][8] = {
 {		// 0
 0x0E,
 0x11,
@@ -921,7 +946,7 @@ static const unsigned char charset[128][8] = {
 0x0E,
 0x00
 },
-{		// \
+{		// '\'
 0x00,
 0x10,
 0x08,
@@ -1282,6 +1307,4 @@ static const unsigned char charset[128][8] = {
 0x00
 }};
 
-int main(){
-    printf("d %d",charset[2][2]);
-}
+#endif

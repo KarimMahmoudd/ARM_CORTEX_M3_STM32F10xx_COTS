@@ -9,6 +9,8 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
+#include "GPIO_interface.h"
+
 #include "SPI_interface.h"
 #include "SPI_private.h"
 #include "SPI_config.h"
@@ -41,8 +43,12 @@ void MSPI1_voidMasterInit(void){
         CLR_BIT(SPI1->CR1,SPI_CR1_LSBF);
     #endif
 
-    SPI1->CR1 &= (~(111<<SPI_CR1_BR2));
-    SPI1->CR1 |= (SPI1_BAUD_RATE_PRESCALER<<SPI_CR1_BR2);
+    SPI1->CR1 &= (~(111<<SPI_CR1_BR0));
+    SPI1->CR1 |= (SPI1_BAUD_RATE_PRESCALER<<SPI_CR1_BR0);
+
+    SET_BIT(SPI1->CR1,SPI_CR1_SSM);
+
+    SET_BIT(SPI1->CR1,SPI_CR1_SSI);
 
     SET_BIT(SPI1->CR1,SPI_CR1_MSTR);
 
@@ -79,11 +85,14 @@ void MSPI1_voidSlaveInit(void){
 }
 
 void MSPI1_voidSynchTranscieve(u16 Copy_u16DataToSend, u16* Copy_pu16DataToReceive){
+    MGPIO_u8SetPinValue(MSPI1_SLAVE_PIN,GPIO_PIN_LOW);
     SPI1->DR = Copy_u16DataToSend;
 
     while(GET_BIT(SPI1->SR,SPI_SR_BSY)==1);
 
     *Copy_pu16DataToReceive = SPI1->DR;
+
+    MGPIO_u8SetPinValue(MSPI1_SLAVE_PIN,GPIO_PIN_HIGH);
 
 }
 

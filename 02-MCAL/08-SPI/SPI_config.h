@@ -10,6 +10,7 @@
 #define SPI_CONFIG_H
 
 
+#define MSPI1_SLAVE_PIN                 GPIO_PORTA,GPIO_PIN12
 
 /* Options:
             1- WRITE_FIRST
@@ -22,13 +23,13 @@
             2- HIGH   
                                                          */
 
-#define SPI1_CLK_POLARITY                LOW
+#define SPI1_CLK_POLARITY                HIGH
 
 /* Options:
             1- LSB
             2- MSB   
                                                          */
-#define SPI1_FIRST_BIT                   LSB
+#define SPI1_FIRST_BIT                   MSB
 
 /* Options:
             1- _8_BITS
