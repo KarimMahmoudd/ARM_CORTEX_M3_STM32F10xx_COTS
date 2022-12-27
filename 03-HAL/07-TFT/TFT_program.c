@@ -3,7 +3,7 @@
 /*  Date        : 25 DEC 2022                                                                                                        */
 /*  Layer       : HAL                                                                                                                */
 /*  SWC         : TFT                                                                                                                */
-/*  Version     : V01                                                                                                                */
+/*  Version     : V02                                                                                                                */
 /*************************************************************************************************************************************/
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
@@ -94,9 +94,9 @@ void HTFT_voidDrawCharacter(char Copy_Character, u16 Copy_u16CharColor, u16 Copy
     /* Writing Data */
     voidSendCommand(CMD_RAMWR);
 
-    for (Local_s8Line = 0; Local_s8Line < 8; Local_s8Line++)
+    for (Local_s8Line = 7; Local_s8Line >= 0; Local_s8Line--)
     {
-        for (Local_s8Pixel = 7; Local_s8Pixel >= 0; Local_s8Pixel--)
+        for (Local_s8Pixel = 0; Local_s8Pixel < 8; Local_s8Pixel++)
         {
             Local_u8ColorDecision = GET_BIT(ASCII[(u8)Copy_Character][Local_s8Line], Local_s8Pixel);
             if (Local_u8ColorDecision == 0)
@@ -113,11 +113,15 @@ void HTFT_voidDrawCharacter(char Copy_Character, u16 Copy_u16CharColor, u16 Copy
 
 void HTFT_voidDrawString(char *Copy_String, u16 Copy_u16StrColor, u16 Copy_u16BackGroundColor, u16 Copy_u16StartColumn, u16 Copy_u16StartRow)
 {
-    u8 Local_u8CharIndex = 0;
-    while (Copy_String[Local_u8CharIndex] != '\0')
+    s8 Local_s8CharIndex = 0;
+    u8 Local_s8StrLength = 0;
+    while (Copy_String[Local_s8StrLength] != '\0')
     {
-        HTFT_voidDrawCharacter(Copy_String[Local_u8CharIndex], Copy_u16StrColor, Copy_u16BackGroundColor, Copy_u16StartColumn + (8 * Local_u8CharIndex), Copy_u16StartRow);
-        Local_u8CharIndex++;
+        Local_s8StrLength++;
+    }
+    for (Local_s8CharIndex = Local_s8StrLength - 1; Local_s8CharIndex >= 0; Local_s8CharIndex--)
+    {
+        HTFT_voidDrawCharacter(Copy_String[Local_s8StrLength - Local_s8CharIndex - 1], Copy_u16StrColor, Copy_u16BackGroundColor, Copy_u16StartColumn + (8 * Local_s8CharIndex), Copy_u16StartRow);
     }
 }
 
