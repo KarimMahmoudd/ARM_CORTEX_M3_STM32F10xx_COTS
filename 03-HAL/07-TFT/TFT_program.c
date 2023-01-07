@@ -7,6 +7,7 @@
 /*************************************************************************************************************************************/
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
+#include "MATH_HELPER.h"
 
 #include "GPIO_interface.h"
 #include "SPI_interface.h"
@@ -122,6 +123,26 @@ void HTFT_voidDrawString(char *Copy_String, u16 Copy_u16StrColor, u16 Copy_u16Ba
     for (Local_s8CharIndex = Local_s8StrLength - 1; Local_s8CharIndex >= 0; Local_s8CharIndex--)
     {
         HTFT_voidDrawCharacter(Copy_String[Local_s8StrLength - Local_s8CharIndex - 1], Copy_u16StrColor, Copy_u16BackGroundColor, Copy_u16StartColumn + (8 * Local_s8CharIndex), Copy_u16StartRow);
+    }
+}
+
+void HTFT_voidDrawNumber(u32 Copy_u32Number, u16 Copy_u16NumColor, u16 Copy_u16BackGroundColor, u16 Copy_u16StartColumn, u16 Copy_u16StartRow)
+{
+    /*set local variables to know the number of digits and the digit to print*/
+    u8 Local_u8Quotient = 1;
+    u8 Local_u8NumOfDigits = 0;
+    u8 Local_u8Digit;
+    /*calculating the number of digits in the number*/
+    while (Local_u8Quotient != 0)
+    {
+        Local_u8Quotient = Copy_u32Number / MATH_u32Power(10, ++Local_u8NumOfDigits);
+    }
+    /*separating each digit then sending then sending them separately to the CLCD*/
+    for (s8 Local_s8Power = Local_u8NumOfDigits - 1; Local_s8Power >= 0; Local_s8Power--)
+    {
+        Local_u8Digit = Copy_u32Number / MATH_u32Power(10, Local_s8Power);
+        Copy_u32Number %= MATH_u32Power(10, Local_s8Power);
+        HTFT_voidDrawCharacter((char)Local_u8Digit, Copy_u16NumColor, Copy_u16BackGroundColor, Copy_u16StartColumn + (8 * Local_s8Power), Copy_u16StartRow);
     }
 }
 

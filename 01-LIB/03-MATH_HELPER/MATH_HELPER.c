@@ -10,7 +10,7 @@
 #include "BIT_MATH.h"
 #include "MATH_HELPER.h"
 
-u32 MATH_u32Power(u32 Copy_u32Base,s32 Copy_u32Exponent){
+u32 MATH_u32Power(u32 Copy_u32Base,u32 Copy_u32Exponent){
 	u32 Local_u32Result=1;
 	for(u32 i=0;i<Copy_u32Exponent;i++){
 		Local_u32Result*=Copy_u32Base;
